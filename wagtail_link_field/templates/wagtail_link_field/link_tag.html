@@ -1,0 +1,5 @@
+<a href="{{ url }}"
+   {% if css_class %}class="{{ css_class }}"{% endif %}
+   {% if target %}target="{{ target }}"{% endif %}
+   {% if rel %}rel="{{ rel }}"{% endif %}
+   {{ extra_attrs }}>{{ title }}</a>

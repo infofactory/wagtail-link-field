@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wagtail-link-field"
+dynamic = ["version"]
+description = "Flexible link block and field for Wagtail CMS"
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "infoFactory" }]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+    "Framework :: Wagtail",
+    "Framework :: Wagtail :: 6",
+    "Framework :: Wagtail :: 7",
+]
+dependencies = [
+    "Django>=4.2",
+    "Wagtail>=6.3",
+]
+keywords = ["wagtail", "django", "cms", "link", "field", "block"]
+
+[project.optional-dependencies]
+testing = [
+    "coverage>=7.0,<8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/infofactory/wagtail-link-field"
+Source = "https://github.com/infofactory/wagtail-link-field"
+Issues = "https://github.com/infofactory/wagtail-link-field/issues"
+
+[tool.hatch.version]
+path = "wagtail_link_field/__init__.py"
+pattern = "__version__ = ['\"](?P<version>[^'\"]+)['\"]"
+
+[tool.hatch.build.targets.wheel]
+packages = ["wagtail_link_field"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "wagtail_link_field/test/",
+    "wagtail_link_field/tests/",
+    ".tox",
+    ".venv",
+    "*.db",
+    "*.sqlite3",
+    "__pycache__",
+]

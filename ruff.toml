@@ -1,0 +1,35 @@
+[lint]
+extend-select = [
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "DJ",  # flake8-django
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "PIE", # flake8-pie
+    "PGH", # pygrep-hooks
+    "SIM", # flake8-simplify
+    "W",   # pycodestyle warnings
+    "UP",  # pyupgrade
+    "RUF100", # unused noqa
+]
+
+extend-ignore = [
+    "E501",  # no line length errors
+]
+
+fixable = ["C4", "E", "F", "I", "UP"]
+
+exclude = ["dist", "build", "venv", ".venv", ".tox", ".git", "__pycache__", "node_modules"]
+
+[lint.per-file-ignores]
+"tests/**.py" = ["DJ008"]
+"wagtail_link_field/test/**.py" = ["DJ008"]
+
+[lint.isort]
+known-first-party = ["wagtail_link_field"]
+lines-between-types = 1
+lines-after-imports = 2
+
+[format]
+docstring-code-format = true
