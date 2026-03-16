@@ -1,6 +1,6 @@
 from django.db import models
 
-from .utils import get_link_url, is_link_external
+from .utils import get_link_title, get_link_url, get_safe_link_title, is_link_external
 
 
 class LinkFieldValue:
@@ -19,6 +19,14 @@ class LinkFieldValue:
 
     def is_external(self):
         return is_link_external(self._data)
+
+    def title(self):
+        """Return page/document title if available, otherwise None."""
+        return get_link_title(self._data)
+
+    def safe_title(self):
+        """Return page/document title or formatted link value."""
+        return get_safe_link_title(self._data)
 
     @property
     def action(self):

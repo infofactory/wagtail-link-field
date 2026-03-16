@@ -1,3 +1,4 @@
+from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 from wagtail.models import Page
 
@@ -30,5 +31,5 @@ class TestStreamFieldPage(Page):
     )
 
     content_panels = Page.content_panels + [
-        LinkPanel("body"),
+        FieldPanel("body"),
     ]

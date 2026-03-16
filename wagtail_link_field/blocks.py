@@ -10,7 +10,7 @@ from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidatio
 from wagtail.documents.blocks import DocumentChooserBlock
 
 from .enums import ACTION_FIELDS, ALL_LINK_TYPES, LINK_TYPE_LABELS
-from .utils import get_link_url, is_link_external
+from .utils import get_link_title, get_link_url, get_safe_link_title, is_link_external
 
 
 class LinkValue(blocks.StructValue):
@@ -19,6 +19,14 @@ class LinkValue(blocks.StructValue):
 
     def is_external(self):
         return is_link_external(self)
+
+    def title(self):
+        """Return page/document title if available, otherwise None."""
+        return get_link_title(self)
+
+    def safe_title(self):
+        """Return page/document title or formatted link value."""
+        return get_safe_link_title(self)
 
 
 class LinkAdapter(StructBlockAdapter):

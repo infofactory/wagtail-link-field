@@ -89,23 +89,22 @@ class TestLinkTitleFilter(TestCase):
         return template.render(Context(context))
 
     def test_link_title_filter_with_title(self):
-        """link_title filter returns the title from data."""
+        """link_title filter returns None for external links (no page/document)."""
         value = LinkFieldValue({
             "action": "external-link",
             "external_link": "https://example.com",
-            "title": "Example Site",
         })
         result = self.render_template(
             '{% load wagtail_link_field_tags %}{{ value|link_title }}',
             {"value": value}
         )
-        self.assertEqual(result.strip(), "Example Site")
+        self.assertEqual(result.strip(), "None")
 
     def test_link_title_filter_empty(self):
-        """link_title filter returns empty string when no title."""
+        """link_title filter returns None when no title."""
         value = LinkFieldValue({"action": "external-link", "external_link": "https://example.com"})
         result = self.render_template(
             '{% load wagtail_link_field_tags %}{{ value|link_title }}',
             {"value": value}
         )
-        self.assertEqual(result.strip(), "")
+        self.assertEqual(result.strip(), "None")

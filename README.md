@@ -63,32 +63,110 @@ class MyPage(Page):
     ]
 ```
 
-### Accessing link data
+### Accessing link data in Python
+
+Both `LinkBlock` values and `LinkField` values provide the same methods:
 
 ```python
+# From a LinkField
 page = MyPage.objects.first()
+link = page.cta  # Returns LinkFieldValue instance
 
-# Get the URL
-url = page.cta.url()  # Returns the computed URL
+# From a LinkBlock in StreamField
+for block in page.body:
+    if block.block_type == 'link':
+        link = block.value  # Returns LinkValue instance
 
-# Check if external
-is_external = page.cta.is_external()  # True for external, email, phone, custom links
-
-# Get the action type
-action = page.cta.action  # e.g., "internal-link", "external-link"
+# Both provide the same methods:
+url = link.url()              # Computed URL (e.g., "/about/", "https://example.com", "mailto:test@example.com")
+is_external = link.is_external()  # True for external, email, phone, document, custom links
+title = link.title()          # Page/document title if available, otherwise None
+safe_title = link.safe_title()    # Formatted title (page title or cleaned URL/email/phone)
+action = link.action          # Link type: "internal-link", "external-link", etc.
 ```
 
-### Template tags
+### Using in templates
+
+Load the template tags:
 
 ```django
 {% load wagtail_link_field_tags %}
+```
 
-{# Render a full anchor tag #}
+#### Option 1: Use `render_link` tag (recommended)
+
+Automatically renders a complete `<a>` tag with proper attributes:
+
+```django
+{# Basic usage - uses safe_title automatically #}
+{% render_link page.cta %}
+{# Output: <a href="/about/">About Us</a> #}
+
+{# With CSS class #}
 {% render_link page.cta css_class="btn btn-primary" %}
 
-{# Or use filters for custom markup #}
-<a href="{{ page.cta|link_url }}" class="my-class">{{ page.cta|link_title }}</a>
+{# With extra attributes #}
+{% render_link page.cta extra_attrs='data-action="click"' %}
+
+{# Works with StreamField blocks too #}
+{% for block in page.body %}
+    {% if block.block_type == 'link' %}
+        {% render_link block.value css_class="content-link" %}
+    {% endif %}
+{% endfor %}
 ```
+
+The `render_link` tag automatically:
+- Adds `target="_blank"` and `rel="noopener noreferrer"` for external links
+- Uses `safe_title()` for the link text (page title or formatted URL/email/phone)
+
+#### Option 2: Use filters for custom markup
+
+```django
+{# Get the URL #}
+<a href="{{ page.cta|link_url }}">Click here</a>
+
+{# Get page/document title (returns None if not available) #}
+<a href="{{ page.cta|link_url }}">
+    {{ page.cta|link_title|default:"Read more" }}
+</a>
+
+{# Get formatted title (always returns something user-friendly) #}
+<a href="{{ page.cta|link_url }}">
+    {{ page.cta|link_safe_title }}
+</a>
+
+{# Build custom markup #}
+{% if page.cta %}
+    <a href="{{ page.cta|link_url }}" 
+       class="{% if page.cta.is_external %}external-link{% endif %}">
+        {{ page.cta|link_safe_title }}
+    </a>
+{% endif %}
+```
+
+#### Option 3: Access methods directly
+
+```django
+{# Access methods on the value object #}
+<a href="{{ page.cta.url }}" 
+   {% if page.cta.is_external %}target="_blank" rel="noopener noreferrer"{% endif %}>
+    {{ page.cta.safe_title }}
+</a>
+
+{# Check link type #}
+{% if page.cta.action == "internal-link" %}
+    <a href="{{ page.cta.url }}" class="internal">{{ page.cta.title|default:page.cta.safe_title }}</a>
+{% elif page.cta.action == "email-link" %}
+    <a href="{{ page.cta.url }}" class="email">{{ page.cta.safe_title }}</a>
+{% endif %}
+```
+
+#### When to use each approach:
+
+- **`{% render_link %}`**: Quick, automatic rendering with sensible defaults
+- **Filters (`|link_url`, `|link_safe_title`)**: Custom HTML structure but simpler syntax
+- **Direct methods (`.url`, `.safe_title`)**: Maximum control and conditional logic
 
 ## Available link types
 
