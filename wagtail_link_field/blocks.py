@@ -9,7 +9,7 @@ from wagtail.admin.telepath import register
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.documents.blocks import DocumentChooserBlock
 
-from .enums import ACTION_FIELDS, ALL_LINK_TYPES, LINK_TYPE_LABELS
+from .enums import ACTION_FIELDS, ALL_LINK_TYPES, LINK_TYPE_LABELS, STANDARD_LINK_FIELDS
 from .utils import get_link_title, get_link_url, get_safe_link_title, is_link_external
 
 
@@ -155,12 +155,16 @@ class LinkBlock(blocks.StructBlock):
             k: v for k, v in result.items() if v not in (None, "")
         }
 
-        # Remove fields not relevant to the selected action
+        # Remove standard link fields not relevant to the selected action
+        # Custom fields added via local_blocks are preserved
         action = result.get("action")
         if action in ACTION_FIELDS:
-            # Keep only action + fields relevant to this action
-            allowed = {"action"} | ACTION_FIELDS[action]
-            result = {k: v for k, v in result.items() if k in allowed}
+            # Keep action + relevant standard fields + any custom fields
+            allowed_standard = {"action"} | ACTION_FIELDS[action]
+            result = {
+                k: v for k, v in result.items()
+                if k not in STANDARD_LINK_FIELDS or k in allowed_standard
+            }
 
         return result
 

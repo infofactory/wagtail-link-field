@@ -42,3 +42,13 @@ ACTION_FIELDS = {
     "phone-link": {"url_link"},
     "custom-link": {"url_link"},
 }
+
+# All standard link field names (excludes "action" which is the type selector)
+STANDARD_LINK_FIELDS = {
+    "internal_link",
+    "page_query_string",
+    "external_link",
+    "document_link",
+    "anchor_link",
+    "url_link",
+}

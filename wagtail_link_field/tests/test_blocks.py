@@ -53,6 +53,64 @@ class TestLinkBlock(TestCase):
         self.assertNotIn("internal_link", result)
         self.assertNotIn("anchor_link", result)
 
+    def test_get_prep_value_preserves_custom_fields(self):
+        """get_prep_value preserves custom fields added via local_blocks."""
+        from wagtail import blocks as wagtail_blocks
+
+        class CustomLinkBlock(LinkBlock):
+            def __init__(self, **kwargs):
+                local_blocks = [
+                    ("custom_title", wagtail_blocks.CharBlock(required=False)),
+                    ("custom_icon", wagtail_blocks.CharBlock(required=False)),
+                ]
+                super().__init__(local_blocks=local_blocks, **kwargs)
+
+        block = CustomLinkBlock()
+        value = block.to_python({
+            "action": "external-link",
+            "external_link": "https://example.com",
+            "custom_title": "My Link",
+            "custom_icon": "arrow",
+            "internal_link": None,  # Standard field, should be removed
+        })
+        result = block.get_prep_value(value)
+        # Custom fields should be preserved
+        self.assertIn("custom_title", result)
+        self.assertEqual(result["custom_title"], "My Link")
+        self.assertIn("custom_icon", result)
+        self.assertEqual(result["custom_icon"], "arrow")
+        # Irrelevant standard fields should still be removed
+        self.assertNotIn("internal_link", result)
+
+    def test_get_prep_value_preserves_custom_fields_with_empty_standard(self):
+        """Custom fields are preserved even when standard fields are empty."""
+        from wagtail import blocks as wagtail_blocks
+
+        class CustomLinkBlock(LinkBlock):
+            def __init__(self, **kwargs):
+                # Must include standard fields plus custom ones when extending
+                local_blocks = [
+                    ("action", wagtail_blocks.ChoiceBlock(
+                        choices=[("anchor-link", "Anchor")],
+                        required=True,
+                    )),
+                    ("anchor_link", wagtail_blocks.CharBlock(required=False)),
+                    ("custom_data", wagtail_blocks.CharBlock(required=False)),
+                ]
+                super().__init__(local_blocks=local_blocks, link_types=["anchor-link"], **kwargs)
+
+        block = CustomLinkBlock()
+        value = block.to_python({
+            "action": "anchor-link",
+            "anchor_link": "section-1",
+            "custom_data": "metadata",
+        })
+        result = block.get_prep_value(value)
+        self.assertIn("action", result)
+        self.assertIn("anchor_link", result)
+        self.assertIn("custom_data", result)
+        self.assertEqual(result["custom_data"], "metadata")
+
 
 class TestLinkValue(TestCase):
     """Tests for LinkValue (StructValue subclass)."""
