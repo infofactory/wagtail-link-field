@@ -1,4 +1,4 @@
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 # Support for Django < 3.2 and simple INSTALLED_APPS configuration
 default_app_config = "wagtail_link_field.apps.WagtailLinkFieldConfig"
