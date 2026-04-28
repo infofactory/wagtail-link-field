@@ -183,6 +183,48 @@ class LinkBlock(blocks.StructBlock):
 
         return super().get_form_state(value)
 
+    def get_translatable_segments(self, value):
+        """
+        Return translatable segments for fields relevant to the selected action.
+
+        This avoids wagtail-localize traversing hidden LinkBlock child fields, which
+        can contain None values for optional text blocks in stored data.
+        """
+        try:
+            from wagtail_localize.segments.extract import StreamFieldSegmentExtractor
+        except ImportError:
+            return []
+
+        if value is None:
+            return []
+
+        if isinstance(value, dict) and not isinstance(value, self.meta.value_class):
+            value = self.to_python(value)
+
+        action = value.get("action")
+        visible_fields = ACTION_FIELDS.get(action, set())
+        extractor = StreamFieldSegmentExtractor(field=None)
+
+        segments = []
+        for field_name in visible_fields:
+            block_type = self.child_blocks.get(field_name)
+            if block_type is None:
+                continue
+
+            block_value = value.get(field_name)
+            if (
+                isinstance(block_type, (blocks.CharBlock, blocks.TextBlock, blocks.BlockQuoteBlock))
+                and block_value is None
+            ):
+                block_value = ""
+
+            segments.extend(
+                segment.wrap(field_name)
+                for segment in extractor.handle_block(block_type, block_value)
+            )
+
+        return segments
+
     class Meta:
         icon = "link"
         label = _("Link")

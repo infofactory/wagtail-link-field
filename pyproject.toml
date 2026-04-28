@@ -62,3 +62,8 @@ exclude = [
     "*.sqlite3",
     "__pycache__",
 ]
+
+[dependency-groups]
+test = [
+    "wagtail-localize>=1.13",
+]

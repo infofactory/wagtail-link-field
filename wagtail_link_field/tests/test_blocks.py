@@ -2,6 +2,12 @@ from django.test import TestCase
 
 from wagtail_link_field.blocks import LinkBlock
 from wagtail_link_field.enums import ALL_LINK_TYPES
+from wagtail_link_field.test.models import TestStreamFieldPage
+
+try:
+    from wagtail_localize.segments.extract import StreamFieldSegmentExtractor
+except ImportError:  # pragma: no cover - optional dependency in this package
+    StreamFieldSegmentExtractor = None
 
 
 class TestLinkBlock(TestCase):
@@ -110,6 +116,37 @@ class TestLinkBlock(TestCase):
         self.assertIn("anchor_link", result)
         self.assertIn("custom_data", result)
         self.assertEqual(result["custom_data"], "metadata")
+
+    def test_get_translatable_segments_uses_action_visible_fields(self):
+        """Only action-relevant fields are localized."""
+        if StreamFieldSegmentExtractor is None:
+            self.skipTest("wagtail-localize is not installed")
+
+        block = LinkBlock()
+        value = block.to_python({
+            "action": "internal-link",
+            "external_link": "https://example.com",
+            "page_query_string": None,
+        })
+
+        segments = block.get_translatable_segments(value)
+        segment_paths = {segment.path for segment in segments}
+        self.assertIn("page_query_string", segment_paths)
+        self.assertNotIn("external_link", segment_paths)
+
+    def test_wagtail_localize_extraction_handles_unset_optional_text_fields(self):
+        """wagtail-localize extraction should not crash on unset optional fields."""
+        if StreamFieldSegmentExtractor is None:
+            self.skipTest("wagtail-localize is not installed")
+
+        field = TestStreamFieldPage._meta.get_field("body")
+        value = field.stream_block.to_python(
+            [{"type": "link", "id": "00000000-0000-0000-0000-000000000001", "value": {"action": "internal-link"}}]
+        )
+        extractor = StreamFieldSegmentExtractor(field)
+
+        segments = extractor.handle_stream_block(value)
+        self.assertIsInstance(segments, list)
 
 
 class TestLinkValue(TestCase):
