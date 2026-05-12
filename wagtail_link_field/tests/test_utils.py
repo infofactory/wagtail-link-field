@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from wagtail_link_field.utils import get_link_url, is_link_external
+from wagtail_link_field.utils import get_link_title, get_link_url, is_link_external
 
 
 class TestGetLinkUrl(TestCase):
@@ -91,3 +91,21 @@ class TestIsLinkExternal(TestCase):
     def test_empty_action(self):
         """Empty action is external (defaults to True)."""
         self.assertTrue(is_link_external({}))
+
+
+class TestGetLinkTitle(TestCase):
+    """Tests for get_link_title utility function."""
+
+    def test_internal_link_uses_localized_page_title(self):
+        """Internal links return the localized page title."""
+
+        class DummyPage:
+            def __init__(self, title, localized=None):
+                self.title = title
+                self.localized = localized or self
+
+        localized_page = DummyPage("Localized title")
+        page = DummyPage("Default title", localized=localized_page)
+        data = {"action": "internal-link", "internal_link": page}
+
+        self.assertEqual(get_link_title(data), "Localized title")

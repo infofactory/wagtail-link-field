@@ -80,8 +80,10 @@ def get_link_title(data):
         page = data.get("internal_link")
         if isinstance(page, int) or (isinstance(page, str) and str(page).isdigit()):
             page = Page.objects.filter(id=page).first()
-        if page and hasattr(page, "title"):
-            return page.title
+        if page:
+            localized_page = getattr(page, "localized", page)
+            if hasattr(localized_page, "title"):
+                return localized_page.title
     elif action == "document-link" and data.get("document_link"):
         doc = data.get("document_link")
         if isinstance(doc, int) or (isinstance(doc, str) and str(doc).isdigit()):
