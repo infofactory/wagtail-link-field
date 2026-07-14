@@ -51,8 +51,14 @@ pattern = "__version__ = ['\"](?P<version>[^'\"]+)['\"]"
 
 [tool.hatch.build.targets.wheel]
 packages = ["wagtail_link_field"]
+artifacts = [
+    "wagtail_link_field/locale/**/*.mo",
+]
 
 [tool.hatch.build.targets.sdist]
+artifacts = [
+    "wagtail_link_field/locale/**/*.mo",
+]
 exclude = [
     "wagtail_link_field/test/",
     "wagtail_link_field/tests/",

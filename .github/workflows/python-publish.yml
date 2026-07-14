@@ -26,9 +26,13 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Compile translations
+        run: |
+          python -m pip install Django
+          django-admin compilemessages --ignore=.venv --ignore=.tox
+
       - name: Build release distributions
         run: |
-          # NOTE: put your own distribution build steps here.
           python -m pip install build
           python -m build
 
