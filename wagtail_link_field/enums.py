@@ -23,13 +23,13 @@ class LinkType(str, Enum):
 ALL_LINK_TYPES = [lt.value for lt in LinkType]
 
 LINK_TYPE_LABELS = {
-    LinkType.INTERNAL.value: _("Internal page"),
-    LinkType.DOCUMENT.value: _("Document"),
-    LinkType.EXTERNAL.value: _("External URL"),
-    LinkType.ANCHOR.value: _("Anchor"),
-    LinkType.EMAIL.value: _("Email"),
-    LinkType.PHONE.value: _("Phone"),
-    LinkType.CUSTOM.value: _("Custom URL"),
+    LinkType.INTERNAL.value: _("Go to page"),
+    LinkType.DOCUMENT.value: _("Go to document"),
+    LinkType.EXTERNAL.value: _("Go to external link"),
+    LinkType.ANCHOR.value: _("Go to anchor"),
+    LinkType.EMAIL.value: _("Send email"),
+    LinkType.PHONE.value: _("Call phone number"),
+    LinkType.CUSTOM.value: _("Go to custom URL"),
 }
 
 # Maps action types to their relevant field names

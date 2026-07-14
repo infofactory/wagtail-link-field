@@ -1,0 +1,117 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wagtail-link-field\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 09:53+0000\n"
+"PO-Revision-Date: 2026-07-14 11:40+0200\n"
+"Last-Translator: infoFactory\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: wagtail_link_field/blocks.py:86
+msgid "Click action"
+msgstr "Click action"
+
+#: wagtail_link_field/blocks.py:89
+msgid "Page"
+msgstr "Page"
+
+#: wagtail_link_field/blocks.py:93
+msgid "URL suffix (optional)"
+msgstr "URL suffix (optional)"
+
+#: wagtail_link_field/blocks.py:94
+msgid ""
+"Append to the page URL: #anchor, ?query=value, or both (e.g., ?"
+"utm_source=newsletter#section)"
+msgstr ""
+"Append to the page URL: #anchor, ?query=value, or both (e.g., ?"
+"utm_source=newsletter#section)"
+
+#: wagtail_link_field/blocks.py:97
+msgid "External link"
+msgstr "External link"
+
+#: wagtail_link_field/blocks.py:100
+msgid "Document"
+msgstr "Document"
+
+#: wagtail_link_field/blocks.py:104
+msgid "Anchor"
+msgstr "Anchor"
+
+#: wagtail_link_field/blocks.py:105
+msgid "Element ID without the # symbol"
+msgstr "Element ID without the # symbol"
+
+#: wagtail_link_field/blocks.py:109
+msgid "URL / address"
+msgstr "URL / address"
+
+#: wagtail_link_field/blocks.py:110
+msgid "Used for email, phone and custom links"
+msgstr "Used for email, phone and custom links"
+
+#: wagtail_link_field/blocks.py:130
+msgid "Please select a page."
+msgstr "Please select a page."
+
+#: wagtail_link_field/blocks.py:131
+msgid "Please select a document."
+msgstr "Please select a document."
+
+#: wagtail_link_field/blocks.py:132
+msgid "Please enter an external URL."
+msgstr "Please enter an external URL."
+
+#: wagtail_link_field/blocks.py:133
+msgid "Please enter an anchor ID."
+msgstr "Please enter an anchor ID."
+
+#: wagtail_link_field/blocks.py:134
+msgid "Please enter an email address."
+msgstr "Please enter an email address."
+
+#: wagtail_link_field/blocks.py:135
+msgid "Please enter a phone number."
+msgstr "Please enter a phone number."
+
+#: wagtail_link_field/blocks.py:136
+msgid "Please enter a URL."
+msgstr "Please enter a URL."
+
+#: wagtail_link_field/blocks.py:230
+msgid "Link"
+msgstr "Link"
+
+#: wagtail_link_field/enums.py:26
+msgid "Go to page"
+msgstr "Go to page"
+
+#: wagtail_link_field/enums.py:27
+msgid "Go to document"
+msgstr "Go to document"
+
+#: wagtail_link_field/enums.py:28
+msgid "Go to external link"
+msgstr "Go to external link"
+
+#: wagtail_link_field/enums.py:29
+msgid "Go to anchor"
+msgstr "Go to anchor"
+
+#: wagtail_link_field/enums.py:30
+msgid "Send email"
+msgstr "Send email"
+
+#: wagtail_link_field/enums.py:31
+msgid "Call phone number"
+msgstr "Call phone number"
+
+#: wagtail_link_field/enums.py:32
+msgid "Go to custom URL"
+msgstr "Go to custom URL"

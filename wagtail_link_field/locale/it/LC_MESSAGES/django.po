@@ -1,0 +1,117 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wagtail-link-field\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 09:53+0000\n"
+"PO-Revision-Date: 2026-07-14 11:40+0200\n"
+"Last-Translator: infoFactory\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: wagtail_link_field/blocks.py:86
+msgid "Click action"
+msgstr "Azione al click"
+
+#: wagtail_link_field/blocks.py:89
+msgid "Page"
+msgstr "Pagina"
+
+#: wagtail_link_field/blocks.py:93
+msgid "URL suffix (optional)"
+msgstr "Suffisso URL (opzionale)"
+
+#: wagtail_link_field/blocks.py:94
+msgid ""
+"Append to the page URL: #anchor, ?query=value, or both (e.g., ?"
+"utm_source=newsletter#section)"
+msgstr ""
+"Aggiungi all'URL della pagina: #ancora, ?query=valore, o entrambi (es. ?"
+"utm_source=newsletter#sezione)"
+
+#: wagtail_link_field/blocks.py:97
+msgid "External link"
+msgstr "Link esterno"
+
+#: wagtail_link_field/blocks.py:100
+msgid "Document"
+msgstr "Documento"
+
+#: wagtail_link_field/blocks.py:104
+msgid "Anchor"
+msgstr "Ancora"
+
+#: wagtail_link_field/blocks.py:105
+msgid "Element ID without the # symbol"
+msgstr "ID elemento senza il simbolo #"
+
+#: wagtail_link_field/blocks.py:109
+msgid "URL / address"
+msgstr "URL / indirizzo"
+
+#: wagtail_link_field/blocks.py:110
+msgid "Used for email, phone and custom links"
+msgstr "Usato per link email, telefono e personalizzati"
+
+#: wagtail_link_field/blocks.py:130
+msgid "Please select a page."
+msgstr "Seleziona una pagina."
+
+#: wagtail_link_field/blocks.py:131
+msgid "Please select a document."
+msgstr "Seleziona un documento."
+
+#: wagtail_link_field/blocks.py:132
+msgid "Please enter an external URL."
+msgstr "Inserisci un link esterno."
+
+#: wagtail_link_field/blocks.py:133
+msgid "Please enter an anchor ID."
+msgstr "Inserisci un ID ancora."
+
+#: wagtail_link_field/blocks.py:134
+msgid "Please enter an email address."
+msgstr "Inserisci un indirizzo email."
+
+#: wagtail_link_field/blocks.py:135
+msgid "Please enter a phone number."
+msgstr "Inserisci un numero di telefono."
+
+#: wagtail_link_field/blocks.py:136
+msgid "Please enter a URL."
+msgstr "Inserisci un URL."
+
+#: wagtail_link_field/blocks.py:230
+msgid "Link"
+msgstr "Link"
+
+#: wagtail_link_field/enums.py:26
+msgid "Go to page"
+msgstr "Vai alla pagina"
+
+#: wagtail_link_field/enums.py:27
+msgid "Go to document"
+msgstr "Vai al documento"
+
+#: wagtail_link_field/enums.py:28
+msgid "Go to external link"
+msgstr "Vai al link esterno"
+
+#: wagtail_link_field/enums.py:29
+msgid "Go to anchor"
+msgstr "Vai all'ancora"
+
+#: wagtail_link_field/enums.py:30
+msgid "Send email"
+msgstr "Invia email"
+
+#: wagtail_link_field/enums.py:31
+msgid "Call phone number"
+msgstr "Chiama il numero di telefono"
+
+#: wagtail_link_field/enums.py:32
+msgid "Go to custom URL"
+msgstr "Vai all'URL personalizzato"

@@ -83,7 +83,7 @@ class LinkBlock(blocks.StructBlock):
                     choices=choices,
                     required=is_required,
                     default=default_action,
-                    label=_("Link type"),
+                    label=_("Click action"),
                 )),
                 ("internal_link", blocks.PageChooserBlock(
                     required=False, label=_("Page")
@@ -94,7 +94,7 @@ class LinkBlock(blocks.StructBlock):
                     help_text=_("Append to the page URL: #anchor, ?query=value, or both (e.g., ?utm_source=newsletter#section)"),
                 )),
                 ("external_link", blocks.URLBlock(
-                    required=False, label=_("External URL")
+                    required=False, label=_("External link")
                 )),
                 ("document_link", DocumentChooserBlock(
                     required=False, label=_("Document")
