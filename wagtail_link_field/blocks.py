@@ -203,7 +203,9 @@ class LinkBlock(blocks.StructBlock):
 
         action = value.get("action")
         visible_fields = ACTION_FIELDS.get(action, set())
-        extractor = StreamFieldSegmentExtractor(field=None)
+        # include_overridables lets URLBlock values through. wagtail-localize
+        # keeps those synchronized and shows them so a locale can replace the URL.
+        extractor = StreamFieldSegmentExtractor(field=None, include_overridables=True)
 
         segments = []
         for field_name in visible_fields:

@@ -134,6 +134,25 @@ class TestLinkBlock(TestCase):
         self.assertIn("page_query_string", segment_paths)
         self.assertNotIn("external_link", segment_paths)
 
+    def test_get_translatable_segments_includes_external_url(self):
+        """External URLs are overridable for the external-link action."""
+        if StreamFieldSegmentExtractor is None:
+            self.skipTest("wagtail-localize is not installed")
+
+        from wagtail_localize.segments import OverridableSegmentValue
+
+        block = LinkBlock()
+        value = block.to_python({
+            "action": "external-link",
+            "external_link": "https://example.com",
+        })
+
+        segments = block.get_translatable_segments(value)
+        self.assertEqual(len(segments), 1)
+        self.assertIsInstance(segments[0], OverridableSegmentValue)
+        self.assertEqual(segments[0].path, "external_link")
+        self.assertEqual(segments[0].data, "https://example.com")
+
     def test_wagtail_localize_extraction_handles_unset_optional_text_fields(self):
         """wagtail-localize extraction should not crash on unset optional fields."""
         if StreamFieldSegmentExtractor is None:
